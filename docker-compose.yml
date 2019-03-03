@@ -1,0 +1,25 @@
+version: "3"
+services:
+  php:
+    image: richarvey/nginx-php-fpm
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/var/www/html/:rw
+    restart: always
+    networks:
+      - default
+    environment:
+      PMA_HOST: "db"
+  db:
+    image: mariadb
+    volumes:
+      - ./db:/var/lib/mysql/:rw
+    restart: always
+    networks:
+      - default
+    environment:
+      MYSQL_ROOT_PASSWORD: "your_password"
+networks:
+  default:
+    driver: bridge
